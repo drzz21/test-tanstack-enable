@@ -3,15 +3,15 @@ import { useQuery } from '@tanstack/vue-query';
 import { useGlobalStore } from './store/global.store';
 
 import axios from 'axios';
-import { toRefs } from 'vue';
+import { toRefs, computed } from 'vue';
 
 const globalStore = useGlobalStore();
-const { hasIdSolicitud } = toRefs(globalStore); 
+// const { hasIdSolicitud } = toRefs(globalStore); 
 
 const { data } = useQuery({
 	queryKey: ['projects', globalStore.id_solicitud],
 	queryFn: () => axios.get(`https://api.kanye.rest/`),
-	enabled: hasIdSolicitud,
+	enabled: computed(()=>globalStore.hasIdSolicitud),
 	// enabled: true,
 });
 
